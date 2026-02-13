@@ -1,0 +1,49 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/notifyhub
+    username: notifyhub
+    password: notifyhub
+
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+app:
+  jwt:
+    secret: NotifyHubSuperSecretKeyForJwtTokenGenerationMustBeAtLeast256Bits2026
+    expiration-ms: 86400000
+  telegram:
+    bot-token: ${TELEGRAM_BOT_TOKEN:}
+    enabled: ${TELEGRAM_ENABLED:false}
+  mail:
+    enabled: ${MAIL_ENABLED:false}
+    from: ${MAIL_FROM:noreply@notifyhub.com}
+  github:
+    token: ${GITHUB_TOKEN:}
+  ingest:
+    poll-interval-seconds: ${INGEST_POLL_INTERVAL:60}
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.notifyhub: DEBUG
+    org.springframework.r2dbc: INFO
